@@ -1,6 +1,6 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 let dbConnection;
-module.exports = {
+export default {
   connectToDb: (cb) => {
     MongoClient.connect("mongodb://localhost:27017/bookstore")
       .then((client) => {
