@@ -11,5 +11,4 @@ connectToDb((err) => {
     db = getDb();
   }
 });
-
 app.use("/books", bookRoutes);
