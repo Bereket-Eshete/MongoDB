@@ -62,3 +62,19 @@ export const deleteBook = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+export const updateBook = async (req, res) => {
+  const { getDb } = database;
+  const updates = req.body;
+  try {
+    const db = getDb();
+    const respo = await db
+      .collection("books")
+      .updateOne(
+        { _id: new ObjectId(req.params.id) },
+        { $set: { ...updates } }
+      );
+    res.status(200).json({ success: true, data: respo });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
