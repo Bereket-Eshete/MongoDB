@@ -13,4 +13,5 @@ connectToDb((err) => {
     db = getDb();
   }
 });
+app.use(express.json());
 app.use("/books", bookRoutes);

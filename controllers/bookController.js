@@ -33,3 +33,32 @@ export const getOneBook = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+export const createBook = async (req, res) => {
+  const { getDb } = database;
+  const db = getDb();
+  const { title, author, pages, rating, geners, reviews } = req.body;
+  try {
+    if (!title || !author || !pages)
+      throw new error("please fill all the required fileds");
+    const newBook = await db
+      .collection("books")
+      .insertOne({ title, author, pages, rating, geners, reviews });
+    res.status(201).json({ success: true, data: newBook });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+export const deleteBook = async (req, res) => {
+  const { getDb } = database;
+  try {
+    const db = getDb();
+    await db
+      .collection("books")
+      .deleteOne({ _id: new ObjectId(req.params.id) });
+    res
+      .status(200)
+      .json({ success: true, message: "book deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
